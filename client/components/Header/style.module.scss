@@ -1,0 +1,20 @@
+.head_container {
+  background: #f4d30f;
+
+  .inner_head_container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0px;
+
+    a {
+      background-color: #ffffff;
+      color: #000000;
+      text-decoration: none;
+      padding: 12px 40px;
+      border-radius: 50px;
+    }
+  }
+}

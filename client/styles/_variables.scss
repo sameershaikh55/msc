@@ -1,0 +1,47 @@
+// VARIABLES
+$primary-color: #ccff33;
+$light-gray: #ededed;
+$medium-gray: #bfc3c5;
+$dark-gray: #71777a;
+$accent-color: #4793f8;
+$dark-text: #1e1e1e;
+$error-color: #cc0000;
+$warning-color: #fa908c;
+$background-color: #121212;
+
+// FONT VARIABLES
+$ubuntu: "Ubuntu", Arial, Helvetica, sans-serif;
+$source-sans-3: "Source Sans 3", Arial, Helvetica, sans-serif;
+// VARIABLES
+
+.primary-color {
+  color: $primary-color;
+}
+
+.light-gray {
+  color: $light-gray;
+}
+
+.medium-gray {
+  color: $medium-gray;
+}
+
+.dark-gray {
+  color: $dark-gray;
+}
+
+.accent-color {
+  color: $accent-color;
+}
+
+.dark-text {
+  color: $dark-text;
+}
+
+.error-color {
+  color: $error-color;
+}
+
+.warning-color {
+  color: $warning-color;
+}
