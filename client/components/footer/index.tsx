@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./style.module.scss";
 
-const Footer = () => {
+const Footer:React.FC = () => {
   return (
     <div className={styles.footer_container}>
       <p className="Monda opacity-50">

@@ -1,0 +1,24 @@
+.page_container {
+  padding-top: 3rem;
+  background: #2f2b3a;
+  min-height: 100vh;
+
+  .account_container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .account_card {
+    background: #6563ff;
+    height: 184px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 316px;
+    border-radius: 40px;
+    margin-bottom: 6rem;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
+}

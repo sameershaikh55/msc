@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./style.module.scss";
 import { wordArray } from "../../utils/wordArray";
 
-const Hero = () => {
+const Hero:React.FC = () => {
   return (
     <div className={styles.hero_container}>
-      <h1 className="d-flex justify-content-between gap-3 py-4">
+      <h1 className="d-flex justify-content-between gap-3 py-5">
         {wordArray("Emotion Explorers").map((alpha) => {
           return (
             <div className={`${styles.heading_alpha} Monofett`}>{alpha}</div>

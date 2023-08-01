@@ -14,12 +14,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
     "paths": {
-      "*": ["*", "src/types/*"]
-    }
+      "@/*": ["./*"]
+    },
+    "types": ["node", "cacheable-request"]
   },
-  "include": ["next-env.d.ts", "custom.d.ts", "src", "types"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

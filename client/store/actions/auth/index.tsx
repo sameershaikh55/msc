@@ -2,10 +2,6 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-  USERSUB_REQUEST,
-  USERSUB_FAIL,
-  USERSUB_SUCCESS,
-  POST_USERSUB_SUCCESS,
   REGISTERATION_FAIL,
   REGISTERATION_REQUEST,
   REGISTERATION_SUCCESS,
@@ -15,178 +11,144 @@ import {
   CLEAR_ERRORS,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
-  CONFIRM_SIGNUP_START,
-  CONFIRM_SIGNUP_END,
-  CONFIRM_SIGNUP_SUCCESS,
-  RESET_PASSWORD_START,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
-  RESET_PASSWORD_SUBMIT_START,
-  RESET_PASSWORD_SUBMIT_SUCCESS,
-  RESET_PASSWORD_SUBMIT_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
 } from "../../types/auth";
 import axios from "axios";
 import { Action, Dispatch } from "redux";
-import { Auth } from "aws-amplify";
-import { UsernamePasswordOpts } from "@aws-amplify/auth/lib-esm/types";
 import { ThunkAction } from "redux-thunk";
-import { RootState } from "@/components/AuthWrapper/types";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { RootState } from "../../../components/AuthWrapper/types";
+import { formData } from "../../../pages/signup/types";
 
 // Login
 export const login =
   (
-    email: string | UsernamePasswordOpts,
-    password: string | undefined,
-    router: any
+    email: string,
+    password: string
   ): ThunkAction<void, RootState, unknown, Action<string>> =>
   async (dispatch) => {
     try {
       dispatch({ type: LOGIN_REQUEST });
 
-      const user = await Auth.signIn(email, password);
-      console.log(user);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: user,
-      });
-      try {
-        dispatch({ type: USERSUB_REQUEST });
+      const config = { headers: { "Content-Type": "application/json" } };
 
-        const userSub = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_API_BASE_URL}/thf/user?userSub=${user.username}`
-        );
-        dispatch({
-          type: USERSUB_SUCCESS,
-          payload: userSub,
-        });
+      const { data } = await axios.post(
+        `/api/auth/login`,
+        { email, password },
+        config
+      );
 
-        localStorage.setItem("user", JSON.stringify(userSub?.data));
-
-        const { is_campaign_completed, is_profile_completed } =
-          userSub.data.result || {};
-        if (!is_profile_completed) {
-          await router.push("/onboarding/start");
-          dispatch({
-            type: POST_USERSUB_SUCCESS,
-          });
-        } else if (!is_campaign_completed) {
-          await router.push("/campaign/start");
-          dispatch({
-            type: POST_USERSUB_SUCCESS,
-          });
-        } else {
-          await router.push("/no_question");
-          dispatch({
-            type: POST_USERSUB_SUCCESS,
-          });
-        }
-      } catch (error) {
-        dispatch({ type: USERSUB_FAIL, payload: error });
-        throw error;
-      }
+      dispatch({ type: LOGIN_SUCCESS, payload: data.user });
     } catch (error) {
-      dispatch({ type: LOGIN_FAIL, payload: error });
-      if (
-        error instanceof Error &&
-        error.message === "Incorrect username or password."
-      ) {
-        toast.warning("Wrong email or password", {
-          position: "top-right",
-          autoClose: 4000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-        });
-      }
-      throw error;
+      dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
   };
 
 // Registration
 export const registration =
-  (
-    email: string,
-    password: string,
-    inviteCode: string,
-    router: any
-  ): ThunkAction<void, RootState, unknown, Action<string>> =>
+  (formData: formData): ThunkAction<void, RootState, unknown, Action<string>> =>
   async (dispatch: Dispatch) => {
     try {
       dispatch({ type: REGISTERATION_REQUEST });
-      const user = await Auth.signUp({
-        username: email,
-        password: password,
-        clientMetadata: {
-          inviteCode: inviteCode,
-        },
-      });
-      dispatch({ type: REGISTERATION_SUCCESS, payload: user });
-      router.push("/login?verification=true");
+
+      const config = { headers: { "Content-Type": "application/json" } };
+
+      const { data } = await axios.post(
+        `/api/auth/register`,
+        { ...formData },
+        config
+      );
+
+      dispatch({ type: REGISTERATION_SUCCESS, payload: data.user });
     } catch (error) {
-      dispatch({ type: REGISTERATION_FAIL, payload: error });
-      if (
-        error instanceof Error &&
-        error.message === "An account with the given email already exists."
-      ) {
-        toast.warning(
-          "You have already registered, please check your emails to verify your email address",
-          {
-            position: "top-right",
-            autoClose: 4000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-          }
-        );
-      }
+      dispatch({
+        type: REGISTERATION_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
-// Confirm Sign Up
-export const confirmSignUp =
+// // Logout User
+export const logout = () => async (dispatch: Dispatch) => {
+  try {
+    await axios.get(`/api/auth/logout`);
+    dispatch({ type: LOGOUT_SUCCESS });
+  } catch (error) {
+    dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
+  }
+};
+
+// Forget Password
+export const forgetPassword =
+  (email: string): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+      const config = { headers: { "Content-Type": "application/json" } };
+
+      const { data } = await axios.post(
+        `/api/auth/password/forgot`,
+        { email },
+        config
+      );
+
+      dispatch({
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: FORGOT_PASSWORD_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+// Reset Password
+export const resetPassword =
   (
-    username: string,
-    code: string,
-    router: any
+    password: string,
+    token: string
   ): ThunkAction<void, RootState, unknown, Action<string>> =>
   async (dispatch: Dispatch) => {
-    dispatch({ type: CONFIRM_SIGNUP_START });
     try {
-      await Auth.confirmSignUp(username, code);
-      dispatch({ type: REGISTERATION_SUCCESS, payload: username });
-      dispatch({ type: CONFIRM_SIGNUP_SUCCESS });
-      router.push("/thank_you");
+      dispatch({ type: RESET_PASSWORD_REQUEST });
+
+      const config = { headers: { "Content-Type": "application/json" } };
+
+      const { data } = await axios.patch(
+        `/api/auth/password/reset/${token}`,
+        password,
+        config
+      );
+
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: data.message,
+      });
     } catch (error) {
-      console.error(error);
-      dispatch({ type: REGISTERATION_FAIL, payload: error });
-      router.push("/login");
-      try {
-        await Auth.resendSignUp(username);
-      } catch (error) {
-        dispatch({ type: REGISTERATION_FAIL, payload: error });
-      }
-    } finally {
-      dispatch({ type: CONFIRM_SIGNUP_END });
+      dispatch({
+        type: RESET_PASSWORD_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
-// Logout User
-export const logout = (router: any) => async (dispatch: Dispatch) => {
+// Load User
+export const loadUser = () => async (dispatch: Dispatch) => {
   try {
-    await Auth.signOut();
-    localStorage.removeItem("user");
-    dispatch({ type: LOGOUT_SUCCESS });
-    router.push("/");
+    dispatch({ type: LOAD_USER_REQUEST });
+
+    const { data } = await axios.get(`/api/profile/user-data`);
+
+    dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOGOUT_FAIL, payload: error });
+    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
   }
 };
 
@@ -194,48 +156,3 @@ export const logout = (router: any) => async (dispatch: Dispatch) => {
 export const clearErrors = () => async (dispatch: Dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
-
-export const forgotPassword = (email: string) => async (dispatch: Dispatch) => {
-  dispatch({ type: RESET_PASSWORD_START });
-  try {
-    await Auth.forgotPassword(email);
-    dispatch({ type: RESET_PASSWORD_SUCCESS });
-    toast.success("Reset email has been sent to your email address", {
-      position: "top-right",
-      autoClose: 4000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      theme: "light",
-    });
-  } catch (error) {
-    console.error(error);
-    dispatch({ type: RESET_PASSWORD_FAIL, payload: error });
-  }
-};
-
-export const forgotPasswordSubmit =
-  (username: string, code: string, newPassword: string, router: any) =>
-  async (dispatch: Dispatch) => {
-    dispatch({ type: RESET_PASSWORD_SUBMIT_START });
-    try {
-      await Auth.forgotPasswordSubmit(username, code, newPassword);
-      dispatch({ type: RESET_PASSWORD_SUBMIT_SUCCESS });
-      router.push("/login");
-      toast.success("Your password has been reset successfully", {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-      });
-    } catch (error) {
-      console.error(error);
-      dispatch({ type: RESET_PASSWORD_SUBMIT_FAIL });
-    }
-  };

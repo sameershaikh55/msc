@@ -5,20 +5,14 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 export interface IUser extends Document {
-  name: string;
-  country: string;
-  province: string;
-  city: string;
+  firstName: string;
+  surname: string;
   email: string;
-  phone: number;
   password: string;
+  verified: boolean;
   resetPasswordToken?: {
     token?: string;
     expire?: Date;
-  };
-  devices: {
-    registered: mongoose.Types.ObjectId[];
-    stolen: mongoose.Types.ObjectId[];
   };
   createdAt: Date;
   getJWTToken(): string;
@@ -26,33 +20,19 @@ export interface IUser extends Document {
 }
 
 const usersSchema: Schema<IUser> = new Schema<IUser>({
-  name: {
+  firstName: {
     type: String,
     trim: true,
-    required: [true, "Please Enter Your Name"],
+    required: [true, "Please Enter First Name"],
     maxLength: [30, "Name cannot exceed 30 characters"],
     minLength: [3, "Name should have more than 4 characters"],
   },
-  country: {
+  surname: {
     type: String,
     trim: true,
-    required: [true, "Please Enter Your Country"],
+    required: [true, "Please Enter Surname"],
     maxLength: [30, "Country cannot exceed 30 characters"],
     minLength: [2, "Country should have more than 2 characters"],
-  },
-  province: {
-    type: String,
-    trim: true,
-    required: [true, "Please Enter Your Province"],
-    maxLength: [30, "Province cannot exceed 30 characters"],
-    minLength: [2, "Province should have more than 2 characters"],
-  },
-  city: {
-    type: String,
-    trim: true,
-    required: [true, "Please Enter Your City"],
-    maxLength: [30, "City cannot exceed 30 characters"],
-    minLength: [2, "City should have more than 2 characters"],
   },
   email: {
     type: String,
@@ -61,37 +41,19 @@ const usersSchema: Schema<IUser> = new Schema<IUser>({
     unique: true,
     validate: [validator.isEmail, "Please Enter a valid Email"],
   },
-  phone: {
-    type: Number,
-    required: true,
-    trim: true,
-    minLength: 11,
-  },
   password: {
     type: String,
     required: true,
     trim: true,
     minLength: [8, "Password should be greater than 8 characters"],
-    // select: false,
   },
   resetPasswordToken: {
     token: String,
     expire: Date,
-    // select: false,
   },
-  devices: {
-    registered: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "registerDevices",
-      },
-    ],
-    stolen: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "stolenDevice",
-      },
-    ],
+  verified: {
+    type: Boolean,
+    default: false,
   },
   createdAt: {
     type: Date,

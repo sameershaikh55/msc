@@ -28,13 +28,13 @@ app.use(cors());
 
 // ROUTE IMPORT
 const auth = require("./routes/auth");
-// const profile = require('./routes/profile');
+const profile = require("./routes/profile");
 // const registerDevice = require('./routes/registerDevice');
 // const stolenDevice = require('./routes/stolenDevice');
 
 // CONTROLLERS
 app.use("/api/auth", auth);
-// app.use('/api/profile', profile);
+app.use("/api/profile", profile);
 // app.use('/api/device', registerDevice);
 // app.use('/api/device', stolenDevice);
 

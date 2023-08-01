@@ -1,0 +1,36 @@
+.page_container {
+  padding-top: 3rem;
+  background: #2f2b3a;
+  min-height: 100vh;
+
+  .cosmic_container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+    .cosmic_body {
+      .welcome_text {
+        text-align: center;
+        font-weight: 400;
+        margin-top: 2.5rem;
+        line-height: 45px;
+        letter-spacing: 2.5px;
+      }
+
+      button {      box-shadow: 0px 4px 4px 0px #00000040;
+        border: none;
+        background: #fff;
+        padding: 12px 70px;
+        font-size: 1.8rem;
+        border-radius: 25px;
+        letter-spacing: 5px;
+        font-weight: 800;
+      }
+
+      .facts {
+        letter-spacing: 6px;
+      }
+    }
+  }
+}

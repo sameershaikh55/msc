@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./style.module.scss";
 import { wordArray } from "../../utils/wordArray";
 
-const Activities = () => {
+const Activities:React.FC = () => {
   return (
     <div className={styles.activites_container}>
       <div className={styles.inner_activites_container}>

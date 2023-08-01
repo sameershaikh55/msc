@@ -12,9 +12,18 @@ const sendToken = (user: IUser, statusCode: number, res: Response): void => {
     httpOnly: true,
   };
 
+  const dataToSend = {
+    firstName: user.firstName,
+    surname: user.surname,
+    email: user.email,
+    verified: user.verified,
+    resetPasswordToken: user.resetPasswordToken,
+    createdAt: user.createdAt,
+  };
+
   res.status(statusCode).cookie("token", token, options).json({
     success: true,
-    user,
+    user: dataToSend,
     token,
   });
 };

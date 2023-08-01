@@ -1,0 +1,56 @@
+@import "../../styles/variables.scss";
+
+.input_field {
+  position: relative;
+  width: 100%;
+  margin-top: 2.5rem;
+
+  input {
+    letter-spacing: 2px;
+    font-size: 1.6rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 3px;
+    border: none;
+    height: 60px;
+    color: #000;
+    font-weight: 200;
+    transition: 0.3s;
+    background: #f4d30fb0;
+
+    &.errorField {
+      border: 2px solid $error-color;
+    }
+
+    &::placeholder {
+      color: #000;
+    }
+
+    &:hover {
+      border: 2px solid #000;
+    }
+  }
+
+  .icon,
+  .errorIcon {
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  .errorIcon {
+    top: 38%;
+  }
+
+  .error {
+    position: absolute;
+    color: $error-color;
+  }
+
+  &.errorField {
+    input {
+      border: 2px solid $error-color;
+    }
+  }
+}

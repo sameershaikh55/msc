@@ -1,4 +1,30 @@
 .page_container {
   padding-top: 3rem;
   background: #2f2b3a;
+  min-height: 100vh;
+}
+
+.formContainer {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #87c7f1;
+  border-radius: 20px;
+  padding: 3rem 4rem;
+
+  h1 {
+    letter-spacing: 5px;
+  }
+
+  button {      box-shadow: 0px 4px 4px 0px #00000040;
+    background-color: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    padding: 10px 50px;
+    border-radius: 50px;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+    border: none;
+    box-shadow: -3px 6px 3px #00000025;
+  }
 }

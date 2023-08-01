@@ -11,10 +11,7 @@ import sendEmail from "../utils/sendEmail";
 export const register = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     const userData = await RegistrationModel.create(req.body);
-
-    const { password, ...userDataWithoutPassword } = userData.toObject();
-
-    sendToken(userDataWithoutPassword as IUser, 201, res);
+    sendToken(userData as IUser, 201, res);
   }
 );
 
@@ -29,7 +26,8 @@ export const login = catchAsyncErrors(
       email,
     }).select("+password");
 
-    if (!gettingRecord) return next(new ErrorHandler("user not found", 404));
+    if (!gettingRecord || !gettingRecord.verified)
+      return next(new ErrorHandler("user not found", 404));
 
     const validPassword: boolean = await bcrypt.compare(
       password,
@@ -39,10 +37,7 @@ export const login = catchAsyncErrors(
     if (!validPassword)
       return next(new ErrorHandler("Invalid email and password", 400));
 
-    const { password: omitPassword, ...userDataWithoutPassword } =
-      gettingRecord.toObject();
-
-    sendToken(userDataWithoutPassword as IUser, 200, res);
+    sendToken(gettingRecord as IUser, 200, res);
   }
 );
 

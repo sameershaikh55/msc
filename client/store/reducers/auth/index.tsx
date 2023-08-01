@@ -1,11 +1,11 @@
+import { initialState } from "../../store";
 import {
   LOGIN_REQUEST,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-  USERSUB_REQUEST,
-  USERSUB_FAIL,
-  USERSUB_SUCCESS,
-  POST_USERSUB_SUCCESS,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
   REGISTERATION_REQUEST,
   REGISTERATION_SUCCESS,
   REGISTERATION_FAIL,
@@ -15,13 +15,17 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
   CLEAR_ERRORS,
-  CONFIRM_SIGNUP_START,
-  CONFIRM_SIGNUP_END,
-  CONFIRM_SIGNUP_SUCCESS,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
+  FORGOT_PASSWORD_RESET,
+  PROFILE_UPDATE_REQUEST,
+  PROFILE_UPDATE_SUCCESS,
+  PROFILE_UPDATE_FAIL,
+  PROFILE_UPDATE_RESET,
   AuthAction,
   AuthState,
 } from "../../types/auth";
-import { initialState } from "@/store/store";
 
 export const authReducer = (
   state = { ...initialState.auth },
@@ -32,13 +36,16 @@ export const authReducer = (
     case REGISTERATION_REQUEST:
     case LOAD_USER_REQUEST:
       return {
-        ...state,
         loading: true,
         isAuthenticated: false,
       };
-    case LOAD_USER_REQUEST:
+    case PROFILE_UPDATE_REQUEST:
       return {
         ...state,
+        profileUpdateLoading: true,
+      };
+    case LOAD_USER_REQUEST:
+      return {
         loading: true,
         isAuthenticated: false,
       };
@@ -49,6 +56,13 @@ export const authReducer = (
         ...state,
         loading: false,
         isAuthenticated: true,
+        user: action.payload,
+      };
+    case PROFILE_UPDATE_SUCCESS:
+      return {
+        ...state,
+        profileUpdateLoading: false,
+        profileUpdate: true,
         user: action.payload,
       };
     case LOGOUT_SUCCESS:
@@ -66,33 +80,23 @@ export const authReducer = (
         user: null,
         error: action.payload,
       };
-    case USERSUB_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case USERSUB_SUCCESS:
-      return {
-        ...state,
-        loading: true,
-        userSub: action.payload,
-      };
-    case POST_USERSUB_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
-    case USERSUB_FAIL:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
     case LOAD_USER_FAIL:
       return {
         loading: false,
         isAuthenticated: false,
         user: null,
+      };
+    case PROFILE_UPDATE_FAIL:
+      return {
+        ...state,
+        profileUpdateLoading: false,
+        profileUpdateError: action.payload,
+      };
+    case PROFILE_UPDATE_RESET:
+      return {
+        ...state,
+        profileUpdate: null,
+        profileUpdateError: null,
       };
     case LOGOUT_FAIL:
       return {
@@ -105,20 +109,78 @@ export const authReducer = (
         ...state,
         error: null,
       };
-    case CONFIRM_SIGNUP_START:
+
+    default:
+      return state;
+  }
+};
+
+export const forgotPasswordReducer = (
+  state = {},
+  action: AuthAction
+): AuthState => {
+  switch (action.type) {
+    case FORGOT_PASSWORD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FORGOT_PASSWORD_SUCCESS:
       return {
         ...state,
         loading: false,
+        message: action.payload,
       };
-    case CONFIRM_SIGNUP_END:
+    case FORGOT_PASSWORD_FAIL:
       return {
         ...state,
         loading: false,
+        error: action.payload,
       };
-    case CONFIRM_SIGNUP_SUCCESS:
+    case FORGOT_PASSWORD_RESET:
       return {
         ...state,
-        signUpConfirmed: true,
+        message: null,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const resetPasswordReducer = (
+  state = {},
+  action: AuthAction
+): AuthState => {
+  switch (action.type) {
+    case RESET_PASSWORD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
+      };
+    case RESET_PASSWORD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
 
     default:
