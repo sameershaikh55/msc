@@ -12,7 +12,12 @@
     .cosmic_body {
       margin-top: 6rem;
 
-      button {      box-shadow: 0px 4px 4px 0px #00000040;
+      @media screen and (max-width: 768px) {
+        margin-top: 3rem;
+      }
+
+      button {
+        box-shadow: 0px 4px 4px 0px #00000040;
         border: none;
         background: #fff;
         padding: 12px 100px;

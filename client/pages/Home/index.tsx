@@ -4,12 +4,14 @@ import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import Activities from "../../components/Activities";
 import Footer from "../../components/footer";
-// import lottie from "lottie-web";
+import lottie from "lottie-web";
 
 const Home: React.FC = () => {
   // const animationContainer = useRef<HTMLDivElement>(null);
 
   // useEffect(() => {
+  //   let animation: any = null;
+
   //   async function loadAnimationData() {
   //     try {
   //       const response = await fetch(
@@ -18,9 +20,9 @@ const Home: React.FC = () => {
   //       const animationData = await response.json();
 
   //       if (animationContainer.current) {
-  //         lottie.loadAnimation({
+  //         animation = lottie.loadAnimation({
   //           container: animationContainer.current,
-  //           renderer: "svg", // or 'canvas' or 'html'
+  //           renderer: "svg",
   //           animationData: animationData,
   //           loop: true,
   //           autoplay: true,
@@ -32,11 +34,20 @@ const Home: React.FC = () => {
   //   }
 
   //   loadAnimationData();
+
+  //   // Cleanup function
+  //   return () => {
+  //     if (animation) {
+  //       animation.destroy();
+  //     }
+  //   };
   // }, []);
 
   return (
     <div className={styles.page_container}>
-      {/* <div style={{ width: "100px" }} ref={animationContainer} /> */}
+      {/* <div>
+        <div style={{ width: "100px" }} ref={animationContainer} />
+      </div> */}
 
       <Header />
       <Hero />

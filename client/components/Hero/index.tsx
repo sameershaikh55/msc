@@ -1,24 +1,18 @@
 import React from "react";
 import styles from "./style.module.scss";
-import { wordArray } from "../../utils/wordArray";
+import MonofettHeading from "../MonofettHeading";
 
-const Hero:React.FC = () => {
+const Hero: React.FC = () => {
   return (
     <div className={styles.hero_container}>
-      <h1 className="d-flex justify-content-between gap-3 py-5">
-        {wordArray("Emotion Explorers").map((alpha) => {
-          return (
-            <div className={`${styles.heading_alpha} Monofett`}>{alpha}</div>
-          );
-        })}
-      </h1>
+      <MonofettHeading words={["Emotion", "Explorers"]} />
 
       <div className="container-fluid">
         <div className="row align-items-center">
-          <div className="col-4">
-            <img src="/assets/hero1.svg" alt="" />
+          <div className="col-12 col-md-4 order-1 order-md-0">
+            <img className="w-100" src="/assets/hero1.svg" alt="" />
           </div>
-          <div className="col-8">
+          <div className="col-12 col-md-8">
             <p className={`text-white text-center f26 Monda`}>
               Welcome to EmotionExplorers, a magical world where learning about
               emotions is fun and engaging! Our mission is to help children with
@@ -28,7 +22,7 @@ const Hero:React.FC = () => {
           </div>
         </div>
         <div className="row align-items-center">
-          <div className="col-8">
+          <div className="col-12 col-md-8">
             <p className={`text-white text-center f26 Monda`}>
               At EmotionExplorers, we believe that every child has the potential
               to understand, express, and manage their emotions effectively. Our
@@ -36,8 +30,8 @@ const Hero:React.FC = () => {
               accessible for children with ASD.{" "}
             </p>
           </div>
-          <div className="col-4">
-            <img src="/assets/hero2.svg" alt="" />
+          <div className="col-12 col-md-4">
+            <img className="w-100" src="/assets/hero2.svg" alt="" />
           </div>
         </div>
       </div>

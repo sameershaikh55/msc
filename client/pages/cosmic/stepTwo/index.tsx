@@ -28,19 +28,23 @@ const CosmicStepTwo: React.FC = () => {
       <div className={styles.cosmic_container}>
         <CosmicHeaing />
 
-        <div className={`${styles.body} row`}>
-          {cosmicFeelings.map((cosmic) => {
-            return (
-              <div className={`${styles.cosmic_card} col-3`}>
-                <img src={cosmic.picture} alt="" />
-                <div className={styles.white_box}></div>
-                <h1 className="text-center Mogra">{cosmic.title}</h1>
-              </div>
-            );
-          })}
+        <div className="container-fluid">
+          <div className={`${styles.body} row gy-4`}>
+            {cosmicFeelings.map((cosmic) => {
+              return (
+                <div
+                  className={`${styles.cosmic_card} col-8 mx-auto col-sm-6 col-md-3`}
+                >
+                  <img src={cosmic.picture} alt="" />
+                  <div className={styles.white_box}></div>
+                  <h1 className="text-center Mogra">{cosmic.title}</h1>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="d-flex justify-content-center mt-5">
+        <div className="d-flex justify-content-center mt-5 pb-5 pb-md-0">
           <Link href="/cosmic/done/">
             <button className="Londrina f28">Finish!</button>
           </Link>

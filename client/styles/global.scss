@@ -7,6 +7,7 @@
   margin: 0px;
   box-sizing: border-box;
   color: #1e1e1e;
+  transition: 0.5s;
 }
 
 .Monofett {
@@ -54,7 +55,8 @@
 }
 
 // We are using important for in
-button {      box-shadow: 0px 4px 4px 0px #00000040;
+button {
+  box-shadow: 0px 4px 4px 0px #00000040;
   border: none;
   font-family: $ubuntu !important;
   font-weight: 500;
@@ -311,9 +313,21 @@ input {
 
 // MEDIA START
 @media screen and (max-width: 1100px) {
+  .f26 {
+    font-size: 1.425rem;
+  }
+  .f34 {
+    font-size: 2rem;
+  }
 }
 
 @media screen and (max-width: 992px) {
+  .f26 {
+    font-size: 1.225rem;
+  }
+  .f34 {
+    font-size: 1.2rem;
+  }
 }
 
 @media screen and (max-width: 768px) {

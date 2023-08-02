@@ -17,6 +17,9 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
   RESET_PASSWORD_REQUEST,
+  PROFILE_UPDATE_REQUEST,
+  PROFILE_UPDATE_SUCCESS,
+  PROFILE_UPDATE_FAIL,
 } from "../../types/auth";
 import axios from "axios";
 import { Action, Dispatch } from "redux";
@@ -43,7 +46,7 @@ export const login =
       );
 
       dispatch({ type: LOGIN_SUCCESS, payload: data.user });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
   };
@@ -63,8 +66,8 @@ export const registration =
         config
       );
 
-      dispatch({ type: REGISTERATION_SUCCESS, payload: data.user });
-    } catch (error) {
+      dispatch({ type: REGISTERATION_SUCCESS, payload: data.message });
+    } catch (error: any) {
       dispatch({
         type: REGISTERATION_FAIL,
         payload: error.response.data.message,
@@ -77,7 +80,7 @@ export const logout = () => async (dispatch: Dispatch) => {
   try {
     await axios.get(`/api/auth/logout`);
     dispatch({ type: LOGOUT_SUCCESS });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }
 };
@@ -101,7 +104,7 @@ export const forgetPassword =
         type: FORGOT_PASSWORD_SUCCESS,
         payload: data.message,
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: FORGOT_PASSWORD_FAIL,
         payload: error.response.data.message,
@@ -131,7 +134,7 @@ export const resetPassword =
         type: RESET_PASSWORD_SUCCESS,
         payload: data.message,
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: RESET_PASSWORD_FAIL,
         payload: error.response.data.message,
@@ -147,10 +150,40 @@ export const loadUser = () => async (dispatch: Dispatch) => {
     const { data } = await axios.get(`/api/profile/user-data`);
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
   }
 };
+
+// Reset Password
+export const updateProfile =
+  (
+    id: any,
+    updateData: any
+  ): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: PROFILE_UPDATE_REQUEST });
+
+      const config = { headers: { "Content-Type": "application/json" } };
+
+      const { data } = await axios.patch(
+        `/api/profile/update/${id}`,
+        updateData,
+        config
+      );
+
+      dispatch({
+        type: PROFILE_UPDATE_SUCCESS,
+        payload: data.user,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: PROFILE_UPDATE_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Clearing Errors
 export const clearErrors = () => async (dispatch: Dispatch) => {

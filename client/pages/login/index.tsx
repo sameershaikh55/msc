@@ -12,7 +12,7 @@ import Input from "../../components/Input";
 import SmallLoader from "../../components/SmallLoader";
 import { RootState } from "../../components/AuthWrapper/types";
 
-const Login:React.FC = () => {
+const Login: React.FC = () => {
   const router = useRouter();
 
   const { loading, error, isAuthenticated } = useSelector(
@@ -100,9 +100,9 @@ const Login:React.FC = () => {
 
   return (
     <div className={styles.page_container}>
-      <Heading word="login" />
+      <Heading word="login" icon={false} />
       <form onSubmit={handleSubmit} className={styles.formContainer}>
-        <h1 className="text-center mb-5">
+        <h1 className="text-center f36 mb-5">
           {(forget && "Forgot Password") || "Sign in"}
         </h1>
 

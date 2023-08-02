@@ -5,13 +5,10 @@ const router = express.Router();
 import { authentication } from "../middleware/authentication";
 
 // CONTROLLERS
-const {
-  getUserData,
-  updateProfile,
-} = require("../controller/profile");
+const { getUserData, updateProfile } = require("../controller/profile");
 
 // // ROUTES
 router.route("/user-data").get(authentication, getUserData);
-router.route("/update").patch(authentication, updateProfile);
+router.route("/update/:id").patch(updateProfile);
 
 module.exports = router;

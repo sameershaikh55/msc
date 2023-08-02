@@ -32,8 +32,11 @@ export const authReducer = (
   action: AuthAction
 ): AuthState => {
   switch (action.type) {
-    case LOGIN_REQUEST:
     case REGISTERATION_REQUEST:
+      return {
+        loading: true,
+      };
+    case LOGIN_REQUEST:
     case LOAD_USER_REQUEST:
       return {
         loading: true,
@@ -44,18 +47,17 @@ export const authReducer = (
         ...state,
         profileUpdateLoading: true,
       };
-    case LOAD_USER_REQUEST:
-      return {
-        loading: true,
-        isAuthenticated: false,
-      };
-    case LOGIN_SUCCESS:
     case REGISTERATION_SUCCESS:
-    case LOAD_USER_SUCCESS:
       return {
         ...state,
         loading: false,
-        isAuthenticated: true,
+        message: action.payload,
+      };
+    case LOAD_USER_SUCCESS:
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
         user: action.payload,
       };
     case PROFILE_UPDATE_SUCCESS:

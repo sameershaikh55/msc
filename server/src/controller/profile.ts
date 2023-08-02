@@ -6,7 +6,7 @@ import sendResponse from "../utils/sendResponse";
 exports.updateProfile = catchAsyncErrors(
   async (req: Request, res: any, next: NextFunction) => {
     const updated = await RegistrationModel.findByIdAndUpdate(
-      res.user._id,
+      req.params.id,
       req.body,
       {
         new: true,
@@ -19,6 +19,6 @@ exports.updateProfile = catchAsyncErrors(
 
 exports.getUserData = catchAsyncErrors(
   async (req: Request, res: any, next: NextFunction) => {
-    sendResponse(true, 200, "user", res.user, res);
+    sendResponse(true, 200, "user", res.locals.user, res);
   }
 );

@@ -10,8 +10,29 @@ import sendEmail from "../utils/sendEmail";
 
 export const register = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const userData = await RegistrationModel.create(req.body);
-    sendToken(userData as IUser, 201, res);
+    const user = await RegistrationModel.create(req.body);
+
+    const message = `Please click on this link to verify your account :- \n\n ${process.env.PASSWORD_RESET_URL}/verification/${user._id} \n\nIf you have not requested this email then, please ignore it.`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: `Verification Email!`,
+        message,
+      });
+
+      sendResponse(
+        true,
+        200,
+        "message",
+        "verification email has been sent!",
+        res
+      );
+    } catch (error) {
+      const err = error as Error;
+
+      return next(new ErrorHandler(err.message, 500));
+    }
   }
 );
 

@@ -2,6 +2,8 @@
   padding-top: 3rem;
   background: #2f2b3a;
   min-height: 100vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .formContainer {
@@ -12,11 +14,16 @@
   border-radius: 20px;
   padding: 3rem 4rem;
 
+  @media screen and (max-width: 768px) {
+    padding: 3rem 1.2rem;
+  }
+
   h1 {
     letter-spacing: 5px;
   }
 
-  button {      box-shadow: 0px 4px 4px 0px #00000040;
+  button {
+    box-shadow: 0px 4px 4px 0px #00000040;
     background-color: #ffffff;
     color: #000000;
     text-decoration: none;
@@ -26,5 +33,10 @@
     letter-spacing: 2px;
     border: none;
     box-shadow: -3px 6px 3px #00000025;
+
+    @media screen and (max-width: 768px) {
+      padding: 8px 40px;
+      font-size: 1.8rem;
+    }
   }
 }

@@ -2,8 +2,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0rem 0.4rem;
 
   h1 {
     letter-spacing: 6px !important;
+
+    @media screen and (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .home {
+    width: 50px;
+  }
+
+  img {
+    width: 60px;
   }
 }

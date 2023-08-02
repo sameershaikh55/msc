@@ -1,5 +1,6 @@
 .head_container {
   background: #f4d30f;
+  padding: 0rem 0.8rem;
 
   .inner_head_container {
     max-width: 1200px;
@@ -16,6 +17,10 @@
       padding: 12px 40px;
       border-radius: 50px;
       box-shadow: 0px 4px 4px 0px #00000040;
+
+      @media screen and (max-width: 768px) {
+        padding: 6px 18px;
+      }
     }
   }
 }

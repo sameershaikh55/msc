@@ -20,35 +20,37 @@ const Activities: React.FC = () => {
   return (
     <div className={styles.page_container}>
       <div className={styles.activities_container}>
-        <Heading word="Activities" />
+        <Heading word="Activities" account />
 
-        <div className="row mt-5">
-          {activities.map(({ title, link, btn }) => {
-            return (
-              <div className="col-6">
-                <div className={styles.activity_card}>
-                  <h1>{title}</h1>
+        <div className="container-fluid">
+          <div className="row mt-md-5 gy-5">
+            {activities.map(({ title, link, btn }) => {
+              return (
+                <div className="col-12 col-md-6">
+                  <div className={styles.activity_card}>
+                    <h1>{title}</h1>
 
-                  <div>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                  </div>
-
-                  <Link
-                    className="col-6 d-flex justify-content-center text-decoration-none"
-                    href={link}
-                  >
-                    <div className={`${styles.activities_btn} text-dark f20`}>
-                      {btn}
+                    <div>
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
                     </div>
-                  </Link>
+
+                    <Link
+                      className="col-6 d-flex justify-content-center text-decoration-none"
+                      href={link}
+                    >
+                      <div className={`${styles.activities_btn} text-dark f20`}>
+                        {btn}
+                      </div>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -14,5 +14,8 @@ export interface RootState {
     loading: boolean;
     user?: any;
     error?: any;
+    message?: any;
+    profileUpdate?: any;
+    profileUpdateLoading?: any;
   };
 }

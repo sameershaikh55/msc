@@ -14,10 +14,10 @@ import Input from "../../components/Input";
 import SmallLoader from "../../components/SmallLoader";
 import { RootState } from "../../components/AuthWrapper/types";
 
-const Signup:React.FC = () => {
+const Signup: React.FC = () => {
   const router = useRouter();
 
-  const { loading, error, isAuthenticated } = useSelector(
+  const { loading, error, message } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -123,19 +123,19 @@ const Signup:React.FC = () => {
       dispatch(clearErrors());
     }
 
-    if (isAuthenticated) {
-      alert("success", "Verification Email has been sent!");
+    if (message) {
+      alert("success", message);
       setFormData(initialState);
-      // router.push("/login");
+      router.push("/login");
     }
-  }, [dispatch, alert, isAuthenticated, error]);
+  }, [dispatch, alert, message, error]);
 
   return (
     <div className={styles.page_container}>
-      <Heading word="Sign Up" />
+      <Heading word="Sign Up" icon={false} />
 
       <form onSubmit={handleSubmit} className={styles.formContainer}>
-        <h1 className="text-center mb-5">Your details</h1>
+        <h1 className="text-center f36 mb-2 mb-md-5">Your details</h1>
 
         {fields.map((content, i) => (
           <div key={i}>

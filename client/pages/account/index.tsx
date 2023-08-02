@@ -26,21 +26,23 @@ const Account: React.FC = () => {
   return (
     <div className={styles.page_container}>
       <div className={styles.account_container}>
-        <Heading word="My Account" icon={false} exit={true} />
+        <Heading account word="My Account" icon={false} exit={true} />
 
-        <div className="row mt-5">
-          {accountLinks.map(({ title, link }) => {
-            return (
-              <Link
-                className="col-6 d-flex justify-content-center text-decoration-none"
-                href={link}
-              >
-                <div className={`${styles.account_card} text-white f32`}>
-                  {title}
-                </div>
-              </Link>
-            );
-          })}
+        <div className="container-fluid">
+          <div className="row mt-5">
+            {accountLinks.map(({ title, link }) => {
+              return (
+                <Link
+                  className="col-6 d-flex justify-content-center text-decoration-none"
+                  href={link}
+                >
+                  <div className={`${styles.account_card} text-white f32`}>
+                    {title}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

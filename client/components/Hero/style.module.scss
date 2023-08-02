@@ -2,6 +2,7 @@
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0rem 0.8rem;
 
   h1 {
     .heading_alpha {
@@ -10,6 +11,10 @@
       box-shadow: 0px 4px 4px 0px #00000040;
       line-height: 0.9;
       border-radius: 20px;
+
+      @media screen and (max-width: 768px) {
+        font-size: 3.2rem;
+      }
     }
   }
 }
