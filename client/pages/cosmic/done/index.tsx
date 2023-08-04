@@ -2,10 +2,18 @@ import React from "react";
 import styles from "./style.module.scss";
 import Link from "next/link";
 import CosmicHeading from "../../../components/CosmicHeading";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const CosmicStart: React.FC = () => {
   return (
     <div className={styles.page_container}>
+      <Player
+        autoplay
+        loop
+        src="/assets/Animations/falling_stars/stars-7035894.json"
+        className={styles.animation}
+      ></Player>
+
       <div className={styles.cosmic_container}>
         <CosmicHeading heading="Well Done!!" />
 

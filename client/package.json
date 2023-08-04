@@ -12,6 +12,7 @@
     "sls:deploy": "sls deploy --stage ${ENVIRONMENT}"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@types/chart.js": "^2.9.37",
     "@types/node": "18.15.0",
     "@types/react": "^18.0.28",

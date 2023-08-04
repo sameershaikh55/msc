@@ -10,3 +10,8 @@ export interface formData {
 export interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {
   target: HTMLInputElement & EventTarget;
 }
+
+export interface AnimationData {
+  src: string;
+  className: string;
+}

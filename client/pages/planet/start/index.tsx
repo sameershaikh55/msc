@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./style.module.scss";
 import Link from "next/link";
 import CosmicHeading from "../../../components/CosmicHeading";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const PlanetStart: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const PlanetStart: React.FC = () => {
           <div
             className={`${styles.cosmic_body} row align-items-center position-relative`}
           >
-            <div className="col-12 col-md-11">
+            <div className="col-12 col-xl-11">
               <p className="text-center text-white f22 fw400 Londrina">
                 Welcome to Planet Emotion! Join ZabbleZib, a friendly alien from
                 the galaxy of FizzlFizz, on an exciting adventure to understand
@@ -54,8 +55,15 @@ const PlanetStart: React.FC = () => {
               </Link>
             </div>
 
+            <Player
+              autoplay
+              loop
+              src="/assets/Animations/earth/earth-7440768.json"
+              className={styles.animation}
+            ></Player>
+
             <img
-              className={`${styles.planetAlien} d-none d-md-block`}
+              className={`${styles.planetAlien}`}
               src="/assets/planetAlien.svg"
               alt=""
             />

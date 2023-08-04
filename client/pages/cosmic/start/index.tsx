@@ -8,9 +8,6 @@ const CosmicStart: React.FC = () => {
     <div className={styles.page_container}>
       <div className={styles.cosmic_container}>
         <CosmicHeading heading="Cosmic Feelings" />
-        {/* <div>
-          <img src="/assets/planets.svg" alt="" />
-        </div> */}
 
         <div className="container-fluid">
           <div className={`${styles.cosmic_body} row align-items-center`}>

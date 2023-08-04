@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import Heading from "../../components/Heading";
-import { FormErrors, InputChangeEvent, formData } from "./types";
+import { AnimationData, FormErrors, InputChangeEvent, formData } from "./types";
 import { useRouter } from "next/router";
 import { ThunkDispatch } from "redux-thunk";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import Input from "../../components/Input";
 import SmallLoader from "../../components/SmallLoader";
 import { RootState } from "../../components/AuthWrapper/types";
 import { FORGOT_PASSWORD_RESET } from "@/store/types/auth";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -90,6 +91,21 @@ const Login: React.FC = () => {
     }
   };
 
+  const animationData: AnimationData[] = [
+    {
+      src: "/assets/Animations/shining/-stars/stars-5252137.json",
+      className: styles.animation1,
+    },
+    {
+      src: "/assets/Animations/shining/-stars/stars-5252137.json",
+      className: styles.animation2,
+    },
+    {
+      src: "/assets/Animations/shining/-stars/stars-5252137.json",
+      className: styles.animation3,
+    },
+  ];
+
   useEffect(() => {
     if (error || forgetPasswordState.error) {
       error && alert("error", error);
@@ -123,7 +139,18 @@ const Login: React.FC = () => {
   return (
     <div className={styles.page_container}>
       <Heading word="login" icon={false} />
+
       <form onSubmit={handleSubmit} className={styles.formContainer}>
+        {animationData.map((data, index) => (
+          <Player
+            key={index}
+            autoplay
+            loop
+            src={data.src}
+            className={data.className}
+          />
+        ))}
+
         <h1 className="text-center f36 mb-5">
           {(forget && "Forgot Password") || "Sign in"}
         </h1>

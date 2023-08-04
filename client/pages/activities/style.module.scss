@@ -1,5 +1,6 @@
 .page_container {
   padding-top: 3rem;
+  padding-bottom: 3rem;
   background: #2f2b3a;
   min-height: 100vh;
 
@@ -35,6 +36,83 @@
 
     h1 {
       color: #f5d30f;
+    }
+  }
+
+  .animation_container {
+    position: relative;
+    background: #87c7f1;
+    max-width: 400px;
+    min-width: 400px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .animation {
+      padding-top: 3rem;
+      max-width: 200px;
+      min-height: 300px;
+    }
+
+    @media screen and (max-width: 475px) {
+      min-width: 100%;
+    }
+  }
+
+  .shiningStar1 {
+    position: absolute;
+    top: 0%;
+    left: -40%;
+    transform: rotate(60deg);
+    z-index: 1;
+    width: 150px;
+  }
+  .shiningStar2 {
+    position: absolute;
+    top: 0%;
+    right: -40%;
+    transform: rotate(60deg);
+    z-index: 1;
+    width: 150px;
+  }
+  .shiningStar3 {
+    position: absolute;
+    bottom: -300%;
+    right: -100%;
+    z-index: 1;
+    width: 150px;
+  }
+  .shiningStar4 {
+    position: absolute;
+    bottom: -300%;
+    right: 50%;
+    z-index: 1;
+    width: 150px;
+  }
+  .shiningStar5 {
+    position: absolute;
+    bottom: -300%;
+    left: -80%;
+    z-index: 1;
+    width: 150px;
+  }
+
+  @media screen and (max-width: 1300px) {
+    .shiningStar1 {
+      display: none;
+    }
+    .shiningStar2 {
+      display: none;
+    }
+    .shiningStar3 {
+      display: none;
+    }
+    .shiningStar4 {
+      display: none;
+    }
+    .shiningStar5 {
+      display: none;
     }
   }
 }

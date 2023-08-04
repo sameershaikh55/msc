@@ -2,10 +2,41 @@ import React from "react";
 import styles from "./style.module.scss";
 import Link from "next/link";
 import CosmicHeading from "../../../components/CosmicHeading";
+import { Player } from "@lottiefiles/react-lottie-player";
+import { AnimationData } from "./types";
 
 const CosmicStart: React.FC = () => {
+  const animationData: AnimationData[] = [
+    {
+      src: "/assets/Animations/star-hexagon-badge.json",
+      className: styles.animation1,
+    },
+    {
+      src: "/assets/Animations/star-hexagon-badge.json",
+      className: styles.animation2,
+    },
+    {
+      src: "/assets/Animations/star-hexagon-badge.json",
+      className: styles.animation3,
+    },
+    {
+      src: "/assets/Animations/star-hexagon-badge.json",
+      className: styles.animation4,
+    },
+  ];
+
   return (
     <div className={styles.page_container}>
+      {animationData.map((data, index) => (
+        <Player
+          key={index}
+          autoplay
+          loop
+          src={data.src}
+          className={data.className}
+        />
+      ))}
+
       <div className={styles.cosmic_container}>
         <CosmicHeading heading="Well Done!!" font="Love text-green" />
 

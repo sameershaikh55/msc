@@ -2,6 +2,7 @@
   padding-top: 3rem;
   background: #2f2b3a;
   min-height: 100vh;
+  padding-bottom: 3rem;
 
   .cosmic_container {
     max-width: 1000px;
@@ -17,7 +18,8 @@
         letter-spacing: 2px;
       }
 
-      button {      box-shadow: 0px 4px 4px 0px #00000040;
+      button {
+        box-shadow: 0px 4px 4px 0px #00000040;
         border: none;
         background: #fff;
         padding: 12px 100px;
@@ -35,6 +37,22 @@
       right: -10%;
       transform: translateY(-50%);
       z-index: -1;
+
+      @media screen and (max-width: 1400px) {
+        display: none !important;
+      }
+    }
+  }
+
+  .animation {
+    position: absolute;
+    bottom: -15%;
+    left: -4%;
+    width: 300px;
+    height: 300px;
+
+    @media screen and (max-width: 950px) {
+      display: none;
     }
   }
 }

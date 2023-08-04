@@ -2,6 +2,7 @@
   padding-top: 3rem;
   background: #2f2b3a;
   min-height: 100vh;
+  padding-bottom: 3rem;
 
   .cosmic_container {
     max-width: 1000px;
@@ -18,7 +19,8 @@
         letter-spacing: 2.5px;
       }
 
-      button {      box-shadow: 0px 4px 4px 0px #00000040;
+      button {
+        box-shadow: 0px 4px 4px 0px #00000040;
         border: none;
         background: #fff;
         padding: 12px 70px;
@@ -31,6 +33,82 @@
       .facts {
         letter-spacing: 6px;
       }
+    }
+  }
+
+  .animation1 {
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    width: 300px;
+    height: 300px;
+    z-index: 1;
+  }
+  .animation2 {
+    position: absolute;
+    bottom: 5%;
+    left: 3%;
+    width: 300px;
+    height: 300px;
+    z-index: 1;
+  }
+  .animation3 {
+    position: absolute;
+    bottom: 5%;
+    right: 3%;
+    width: 300px;
+    height: 300px;
+    z-index: 1;
+  }
+  .animation4 {
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    width: 300px;
+    height: 300px;
+    transform: rotate(60deg);
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 1700px) {
+    .animation1,
+    .animation2,
+    .animation3,
+    .animation4 {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  @media screen and (max-width: 1400px) {
+    .animation1,
+    .animation2,
+    .animation3,
+    .animation4 {
+      width: 150px;
+      height: 150px;
+    }
+
+    .animation1 {
+      top: 15%;
+    }
+    .animation2 {
+      bottom: 15%;
+    }
+    .animation3 {
+      bottom: 15%;
+    }
+    .animation4 {
+      top: 15%;
+    }
+  }
+
+  @media screen and (max-width: 1050px) {
+    .animation1,
+    .animation2,
+    .animation3,
+    .animation4 {
+      display: none;
     }
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import Heading from "../../components/Heading";
-import { FormErrors, InputChangeEvent, formData } from "./types";
+import { AnimationData, FormErrors, InputChangeEvent, formData } from "./types";
 import { useRouter } from "next/router";
 import "react-toastify/dist/ReactToastify.css";
 import { ThunkDispatch } from "redux-thunk";
@@ -13,6 +13,7 @@ import { clearErrors, registration } from "../../store/actions/auth";
 import Input from "../../components/Input";
 import SmallLoader from "../../components/SmallLoader";
 import { RootState } from "../../components/AuthWrapper/types";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const Signup: React.FC = () => {
   const router = useRouter();
@@ -117,6 +118,21 @@ const Signup: React.FC = () => {
     }
   };
 
+  const animationData: AnimationData[] = [
+    {
+      src: "/assets/Animations/shining/-stars/stars-5252137.json",
+      className: styles.animation1,
+    },
+    {
+      src: "/assets/Animations/shining/-stars/stars-5252137.json",
+      className: styles.animation2,
+    },
+    {
+      src: "/assets/Animations/shining/-stars/stars-5252137.json",
+      className: styles.animation3,
+    },
+  ];
+
   useEffect(() => {
     if (error) {
       alert("error", error);
@@ -135,6 +151,16 @@ const Signup: React.FC = () => {
       <Heading word="Sign Up" icon={false} />
 
       <form onSubmit={handleSubmit} className={styles.formContainer}>
+        {animationData.map((data, index) => (
+          <Player
+            key={index}
+            autoplay
+            loop
+            src={data.src}
+            className={data.className}
+          />
+        ))}
+
         <h1 className="text-center f36 mb-2 mb-md-5">Your details</h1>
 
         {fields.map((content, i) => (
