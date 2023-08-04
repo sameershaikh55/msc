@@ -44,6 +44,7 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({
   if (
     loading &&
     !router.pathname.includes("/login") &&
+    !router.pathname.includes("/register") &&
     router.pathname !== "/"
   ) {
     return <Loader />;

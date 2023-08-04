@@ -21,6 +21,7 @@ export interface RootState {
     profileUpdate?: any;
     profileUpdateLoading?: any;
     loginLoading?: boolean;
+    registerLoading?: boolean;
   };
   forgetPassword: {
     error?: any;

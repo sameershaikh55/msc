@@ -14,11 +14,12 @@ import Input from "../../components/Input";
 import SmallLoader from "../../components/SmallLoader";
 import { RootState } from "../../components/AuthWrapper/types";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { REGISTERATION_RESET } from "@/store/types/auth";
 
 const Signup: React.FC = () => {
   const router = useRouter();
 
-  const { loading, error, message } = useSelector(
+  const { registerLoading, error, message } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -141,10 +142,11 @@ const Signup: React.FC = () => {
 
     if (message) {
       alert("success", message);
+      dispatch({ type: REGISTERATION_RESET });
       setFormData(initialState);
       router.push("/login");
     }
-  }, [dispatch, alert, message, error]);
+  }, [dispatch, message, error]);
 
   return (
     <div className={styles.page_container}>
@@ -180,7 +182,7 @@ const Signup: React.FC = () => {
             }
             type="submit"
           >
-            {(loading && <SmallLoader />) || "Sign up"}
+            {(registerLoading && <SmallLoader />) || "Sign up"}
           </button>
         </div>
       </form>

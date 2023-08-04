@@ -7,6 +7,7 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const REGISTERATION_REQUEST = "REGISTERATION_REQUEST";
 export const REGISTERATION_SUCCESS = "REGISTERATION_SUCCESS";
 export const REGISTERATION_FAIL = "REGISTERATION_FAIL";
+export const REGISTERATION_RESET = "REGISTERATION_RESET";
 
 export const LOAD_USER_REQUEST = "LOAD_USER_REQUEST";
 export const LOAD_USER_SUCCESS = "LOAD_USER_SUCCESS";
@@ -41,6 +42,7 @@ export interface AuthState {
   profileUpdateError?: any;
   message?: string | null;
   loginLoading?: boolean;
+  registerLoading?: boolean;
 }
 
 export interface AuthAction {

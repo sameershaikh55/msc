@@ -23,6 +23,7 @@ import {
   PROFILE_UPDATE_SUCCESS,
   PROFILE_UPDATE_FAIL,
   PROFILE_UPDATE_RESET,
+  REGISTERATION_RESET,
   AuthAction,
   AuthState,
 } from "../../types/auth";
@@ -34,7 +35,7 @@ export const authReducer = (
   switch (action.type) {
     case REGISTERATION_REQUEST:
       return {
-        loading: true,
+        registerLoading: true,
       };
     case LOGIN_REQUEST:
       return {
@@ -54,7 +55,7 @@ export const authReducer = (
     case REGISTERATION_SUCCESS:
       return {
         ...state,
-        loading: false,
+        registerLoading: false,
         message: action.payload,
       };
     case LOAD_USER_SUCCESS:
@@ -90,6 +91,7 @@ export const authReducer = (
         ...state,
         loading: false,
         loginLoading: false,
+        registerLoading: false,
         isAuthenticated: false,
         user: null,
         error: action.payload,
@@ -105,6 +107,12 @@ export const authReducer = (
         ...state,
         profileUpdateLoading: false,
         profileUpdateError: action.payload,
+      };
+    case REGISTERATION_RESET:
+      return {
+        ...state,
+        registerLoading: false,
+        message: null,
       };
     case PROFILE_UPDATE_RESET:
       return {
