@@ -13,4 +13,17 @@
       letter-spacing: 10px;
     }
   }
+
+  .settings_container {
+    background: #5f418b;
+
+    .left_side {
+      background: #57279c;
+      padding: 3rem;
+    }
+
+    .right_side {
+      padding: 3rem;
+    }
+  }
 }

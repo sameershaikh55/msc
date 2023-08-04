@@ -29,14 +29,14 @@ app.use(cors());
 // ROUTE IMPORT
 const auth = require("./routes/auth");
 const profile = require("./routes/profile");
-// const registerDevice = require('./routes/registerDevice');
-// const stolenDevice = require('./routes/stolenDevice');
+const game = require("./routes/games");
+const settings = require("./routes/settings");
 
 // CONTROLLERS
 app.use("/api/auth", auth);
 app.use("/api/profile", profile);
-// app.use('/api/device', registerDevice);
-// app.use('/api/device', stolenDevice);
+app.use("/api/game", game);
+app.use("/api/settings", settings);
 
 // Middleware for Errors
 app.use(errorMiddleware);

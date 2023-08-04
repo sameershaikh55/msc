@@ -37,6 +37,10 @@ export const authReducer = (
         loading: true,
       };
     case LOGIN_REQUEST:
+      return {
+        loginLoading: true,
+        isAuthenticated: false,
+      };
     case LOAD_USER_REQUEST:
       return {
         loading: true,
@@ -54,10 +58,17 @@ export const authReducer = (
         message: action.payload,
       };
     case LOAD_USER_SUCCESS:
-    case LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
+        isAuthenticated: true,
+        user: action.payload,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loginLoading: false,
+        isAuthenticated: true,
         user: action.payload,
       };
     case PROFILE_UPDATE_SUCCESS:
@@ -78,6 +89,7 @@ export const authReducer = (
       return {
         ...state,
         loading: false,
+        loginLoading: false,
         isAuthenticated: false,
         user: null,
         error: action.payload,

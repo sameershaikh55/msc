@@ -2,8 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createWrapper } from "next-redux-wrapper";
-import { authReducer } from "./reducers/auth";
+import {
+  authReducer,
+  forgotPasswordReducer,
+  resetPasswordReducer,
+} from "./reducers/auth";
+import { gameReducer } from "./reducers/game";
 import { RootState } from "./types/root-state.type";
+import { settingsReducer } from "./reducers/settings";
 
 export const initialState: RootState = {
   auth: {
@@ -11,11 +17,21 @@ export const initialState: RootState = {
     isAuthenticated: false,
     loading: false,
   },
+  game: {
+    loading: false,
+  },
+  settings: {
+    loading: false,
+  },
 };
 
 // Combine multiple reducers using combineReducers()
 const reducer = combineReducers({
   auth: authReducer,
+  forgetPassword: forgotPasswordReducer,
+  resetPassword: resetPasswordReducer,
+  game: gameReducer,
+  settings: settingsReducer,
 });
 
 // Create middleware for the store

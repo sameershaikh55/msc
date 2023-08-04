@@ -10,6 +10,7 @@ const PlanetStepFour: React.FC = () => {
         <CosmicHeading />
 
         <DetailedQuestion
+          correctPattern={"Anxious"}
           title="What is the boy feeling?"
           options={["Excited", "Shy", "Suprised", "Anxious"]}
           question="Why could he be feeling like that?"

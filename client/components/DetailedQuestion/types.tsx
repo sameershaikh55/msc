@@ -5,4 +5,5 @@ export type Props = {
   question: string;
   next: string;
   btnText?: string;
+  correctPattern: string;
 };

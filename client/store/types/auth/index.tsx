@@ -40,6 +40,7 @@ export interface AuthState {
   profileUpdate?: boolean | null;
   profileUpdateError?: any;
   message?: string | null;
+  loginLoading?: boolean;
 }
 
 export interface AuthAction {

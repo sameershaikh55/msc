@@ -26,6 +26,8 @@ import { Action, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../../../components/AuthWrapper/types";
 import { formData } from "../../../pages/signup/types";
+import { setCookie } from "@/utils/cookies";
+import { clearAllCookies } from "@/utils/clearCookies";
 
 // Login
 export const login =
@@ -46,6 +48,7 @@ export const login =
       );
 
       dispatch({ type: LOGIN_SUCCESS, payload: data.user });
+      setCookie("token", data.token, 1);
     } catch (error: any) {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
@@ -80,6 +83,7 @@ export const logout = () => async (dispatch: Dispatch) => {
   try {
     await axios.get(`/api/auth/logout`);
     dispatch({ type: LOGOUT_SUCCESS });
+    clearAllCookies();
   } catch (error: any) {
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }
@@ -115,8 +119,8 @@ export const forgetPassword =
 // Reset Password
 export const resetPassword =
   (
-    password: string,
-    token: string
+    passwords: { password: string; confirmPassword: string },
+    token: any
   ): ThunkAction<void, RootState, unknown, Action<string>> =>
   async (dispatch: Dispatch) => {
     try {
@@ -126,7 +130,7 @@ export const resetPassword =
 
       const { data } = await axios.patch(
         `/api/auth/password/reset/${token}`,
-        password,
+        { ...passwords },
         config
       );
 
@@ -143,11 +147,17 @@ export const resetPassword =
   };
 
 // Load User
-export const loadUser = () => async (dispatch: Dispatch) => {
+export const loadUser = (token: string) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const { data } = await axios.get(`/api/profile/user-data`);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Set the token in the 'Authorization' header
+      },
+    };
+
+    const { data } = await axios.get(`/api/profile/user-data`, config);
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error: any) {

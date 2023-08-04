@@ -19,6 +19,16 @@ exports.updateProfile = catchAsyncErrors(
 
 exports.getUserData = catchAsyncErrors(
   async (req: Request, res: any, next: NextFunction) => {
-    sendResponse(true, 200, "user", res.locals.user, res);
+    const user = res.locals.user;
+
+    const dataToSend = {
+      firstName: user.firstName,
+      surname: user.surname,
+      email: user.email,
+      verified: user.verified,
+      createdAt: user.createdAt,
+    };
+
+    sendResponse(true, 200, "user", { ...dataToSend }, res);
   }
 );

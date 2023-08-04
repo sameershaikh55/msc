@@ -1,3 +1,6 @@
+import { Games } from "@/store/types/game";
+import { Settings } from "@/store/types/settings";
+
 export interface Redirection {
   destination: string;
   permanent: boolean;
@@ -17,5 +20,26 @@ export interface RootState {
     message?: any;
     profileUpdate?: any;
     profileUpdateLoading?: any;
+    loginLoading?: boolean;
+  };
+  forgetPassword: {
+    error?: any;
+    message?: any;
+    loading?: any;
+  };
+  resetPassword: {
+    error?: any;
+    message?: any;
+    loading?: any;
+  };
+  game: {
+    game: Games;
+    loading: boolean;
+    error: any;
+  };
+  settings: {
+    settings: Settings;
+    loading: boolean;
+    error: any;
   };
 }

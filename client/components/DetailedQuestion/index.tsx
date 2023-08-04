@@ -4,6 +4,11 @@ import { Props } from "./types";
 import Link from "next/link";
 import DraggableItem from "../DraggableItem";
 import DropTarget from "../DropTarget";
+import { getCookie } from "@/utils/getCookies";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { useDispatch } from "react-redux";
+import { updateGame } from "@/store/actions/game";
 
 const DetailedQuestion: React.FC<Props> = ({
   options,
@@ -12,12 +17,24 @@ const DetailedQuestion: React.FC<Props> = ({
   title,
   next,
   btnText = "Next",
+  correctPattern,
 }) => {
+  const cookieValue = getCookie("token");
+  const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
+
   const [items, setItems] = useState<string[]>([...options]);
   const [droppedItems, setDroppedItems] = useState<string>("");
 
   const handleDrop = (itemId: string) => {
     setDroppedItems(itemId);
+
+    const type = correctPattern === itemId ? "correct" : "wrong";
+    dispatch(updateGame({ name: "planet", type }, cookieValue));
+  };
+
+  const reset = () => {
+    setItems([...options]);
+    setDroppedItems("");
   };
 
   return (
@@ -26,7 +43,15 @@ const DetailedQuestion: React.FC<Props> = ({
         <div className="col-12 col-md-6">
           <h2 className="text-white text-center letterspace">{title}</h2>
 
-          <div className={styles.white_box}>
+          <div
+            style={{
+              background:
+                droppedItems === correctPattern
+                  ? "green"
+                  : droppedItems && "red",
+            }}
+            className={styles.white_box}
+          >
             <DropTarget onDrop={handleDrop}>
               <div className={`${styles.targeted} text-center`}>
                 {droppedItems}
@@ -36,9 +61,9 @@ const DetailedQuestion: React.FC<Props> = ({
 
           <div className="row gy-3 mt-4">
             {items.map((option) => {
-              return (
-                <DraggableItem id={option.toLowerCase()} name={option} planet />
-              );
+              if (droppedItems !== option)
+                return <DraggableItem id={option} name={option} planet />;
+              else return <DraggableItem id={""} name={""} planet />;
             })}
           </div>
         </div>
@@ -56,11 +81,19 @@ const DetailedQuestion: React.FC<Props> = ({
         </div>
 
         <div className="col-12">
-          <Link href={next} className="text-decoration-none">
-            <div className={`d-flex justify-content-center mt-5 mb-5 mb-md-0`}>
-              <button className="Londrina f22">{btnText}</button>
-            </div>
-          </Link>
+          <div className="d-flex justify-content-center align-items-center mt-5 pb-5 pb-md-0 gap-3">
+            <Link href={next} className="text-decoration-none">
+              <button
+                disabled={droppedItems === correctPattern ? false : true}
+                className="Londrina f28"
+              >
+                {btnText}
+              </button>
+            </Link>
+            <button onClick={reset} className={`${styles.reset} Londrina f20`}>
+              Reset
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -2,45 +2,52 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthWrapperProps, RootState } from "./types";
-import { loadUser } from "../../store/actions/auth";
+// import { loadUser } from "@/store/actions/auth";
 import { ThunkDispatch } from "redux-thunk";
 import { Dispatch } from "redux";
-import { SurveyAction, SurveyState } from "../../store/reducers/auth/types";
-import Loader from "../../components/Loader";
+import { SurveyAction, SurveyState } from "@/store/reducers/auth/types";
+import Loader from "@/components/Loader";
+import { getCookie } from "@/utils/getCookies";
+import { loadUser } from "@/store/actions/auth";
 
 const AuthWrapper: React.FC<AuthWrapperProps> = ({
   children,
 }: AuthWrapperProps) => {
+  const cookieValue = getCookie("token");
+
   const dispatch = useDispatch();
   const router = useRouter();
 
   const dispatchTyped: ThunkDispatch<SurveyState, null, SurveyAction> =
     dispatch as Dispatch<SurveyAction>;
 
-  // const { user, isAuthenticated, loading } = useSelector(
-  //   (state: RootState) => state.auth
-  // );
+  const { isAuthenticated, loading } = useSelector(
+    (state: RootState) => state.auth
+  );
 
-  // useEffect(() => {
-  //   dispatchTyped(loadUser());
-  // }, []);
+  useEffect(() => {
+    if (cookieValue) {
+      dispatchTyped(loadUser(cookieValue));
+    } else {
+      if (
+        !router.pathname.includes("/login") &&
+        !router.pathname.includes("/signup") &&
+        router.pathname !== "/" &&
+        !router.pathname.includes("/reset_password") &&
+        !router.pathname.includes("/password/reset")
+      ) {
+        router.replace("/login");
+      }
+    }
+  }, [cookieValue]);
 
-  // useEffect(() => {
-  //   if (
-  //     !user &&
-  //     router.pathname !== "/login" &&
-  //     router.pathname !== "/" &&
-  //     router.pathname !== "/signup" &&
-  //     !router.pathname.includes("/reset_password") &&
-  //     !router.pathname.includes("/set_password")
-  //   ) {
-  //     router.push("/login");
-  //   }
-  // }, [router, user, isAuthenticated]);
-
-  // if (loading || user === false) {
-  //   return <Loader />;
-  // }
+  if (
+    loading &&
+    !router.pathname.includes("/login") &&
+    router.pathname !== "/"
+  ) {
+    return <Loader />;
+  }
 
   return <>{children}</>;
 };

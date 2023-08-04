@@ -3,6 +3,11 @@ import styles from "./style.module.scss";
 import { wordArray } from "../../utils/wordArray";
 import { Props } from "./types";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/actions/auth";
 
 const Heading: React.FC<Props> = ({
   word,
@@ -10,6 +15,9 @@ const Heading: React.FC<Props> = ({
   exit = false,
   account,
 }) => {
+  const router = useRouter();
+  const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
+
   return (
     <div className={styles.hero_container}>
       <div className="d-flex justify-content-center gap-3 py-4 position-relative">
@@ -37,9 +45,12 @@ const Heading: React.FC<Props> = ({
           })}
         </h1>
         {exit && (
-          <Link className={styles.exit_button} href="/account">
+          <button
+            onClick={() => dispatch(logout())}
+            className={`${styles.exit_button} bg-transparent border-0 shadow-none`}
+          >
             <img src="/assets/exit.svg" alt="" />
-          </Link>
+          </button>
         )}
       </div>
     </div>

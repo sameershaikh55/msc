@@ -10,6 +10,7 @@ const PlanetStepTwo: React.FC = () => {
         <CosmicHeading />
 
         <DetailedQuestion
+          correctPattern={"Confused"}
           picture="/assets/planetStepTwo.png"
           options={["Sleepy", "Frustrated", "Confused", "Sneaky"]}
           question="Why could she be feeling like that?"

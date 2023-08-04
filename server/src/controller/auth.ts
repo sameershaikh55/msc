@@ -4,9 +4,11 @@ import { Request, Response, NextFunction } from "express";
 import ErrorHandler from "../utils/errorhandler";
 import catchAsyncErrors from "../middleware/catchAsyncErrors";
 import RegistrationModel, { IUser } from "../models/registration";
+import GamesModel from "../models/games";
 import sendToken from "../utils/jwtToken";
 import sendResponse from "../utils/sendResponse";
 import sendEmail from "../utils/sendEmail";
+import SettingsModel from "../models/settings";
 
 export const register = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -28,6 +30,9 @@ export const register = catchAsyncErrors(
         "verification email has been sent!",
         res
       );
+
+      await GamesModel.create({ user: user._id });
+      await SettingsModel.create({ user: user._id });
     } catch (error) {
       const err = error as Error;
 
@@ -168,6 +173,6 @@ export const resetPassword = catchAsyncErrors(
 
     await user.save();
 
-    sendResponse(true, 200, "message", "Password Reset Successfully!", res);
+    sendResponse(true, 200, "message", "Password Changed Successfully!", res);
   }
 );

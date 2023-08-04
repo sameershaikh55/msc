@@ -11,12 +11,16 @@ import { clearErrors, forgetPassword, login } from "../../store/actions/auth";
 import Input from "../../components/Input";
 import SmallLoader from "../../components/SmallLoader";
 import { RootState } from "../../components/AuthWrapper/types";
+import { FORGOT_PASSWORD_RESET } from "@/store/types/auth";
 
 const Login: React.FC = () => {
   const router = useRouter();
 
-  const { loading, error, isAuthenticated } = useSelector(
+  const { loginLoading, error, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
+  );
+  const forgetPasswordState = useSelector(
+    (state: RootState) => state.forgetPassword
   );
 
   const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
@@ -87,16 +91,34 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      alert("error", error);
+    if (error || forgetPasswordState.error) {
+      error && alert("error", error);
+      forgetPasswordState.error && alert("error", forgetPasswordState.error);
       dispatch(clearErrors());
     }
 
-    if (isAuthenticated) {
-      setFormData(initialState);
-      router.push("/account");
+    if (forgetPasswordState.message) {
+      alert("success", "Email sent!");
+      dispatch({ type: FORGOT_PASSWORD_RESET });
+      setForget(false);
+      setFormData({
+        email: "",
+        password: "",
+      });
     }
-  }, [dispatch, alert, isAuthenticated, error]);
+
+    if (isAuthenticated) {
+      router.push("/account");
+      setFormData(initialState);
+    }
+  }, [
+    dispatch,
+    alert,
+    isAuthenticated,
+    error,
+    forgetPasswordState.error,
+    forgetPasswordState.message,
+  ]);
 
   return (
     <div className={styles.page_container}>
@@ -126,10 +148,16 @@ const Login: React.FC = () => {
         <div className="d-flex justify-content-center mt-4">
           <button
             className="Londrina"
-            disabled={email && password ? false : true}
+            disabled={
+              loginLoading || forgetPasswordState.loading ? true : false
+            }
             type="submit"
           >
-            {(loading && <SmallLoader />) || "Sign in"}
+            {loginLoading || forgetPasswordState.loading ? (
+              <SmallLoader />
+            ) : (
+              "Sign in"
+            )}
           </button>
         </div>
       </form>

@@ -2,6 +2,7 @@
   padding-top: 3rem;
   background: #2f2b3a;
   min-height: 100vh;
+  padding-bottom: 5rem;
 
   .detail_container {
     max-width: 1000px;
@@ -13,4 +14,10 @@
       letter-spacing: 10px;
     }
   }
+}
+
+.data_container {
+  background: #f4d30f;
+  padding: 2rem;
+  border-radius: 20px;
 }
